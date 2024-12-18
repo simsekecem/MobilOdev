@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Başlık -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gezilen Yer"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:paddingBottom="16dp" />
+
+        <!-- Yer Fotoğrafları Başlık -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yer Fotoğrafları"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingBottom="8dp" />
+
+        <!-- Horizontal Scroll for Photos -->
+
+        <!-- Kullanıcı Adı -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- Multiple ImageViews for photos -->
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginEnd="8dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/photo_example" />
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginEnd="8dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/photo_example" />
+
+                <!-- You can add more ImageViews as needed -->
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginEnd="8dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/photo_example" />
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginEnd="8dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/photo_example" />
+
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvUsername"
+            android:text="Kullanıcı Adı: @username"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:paddingBottom="8dp" />
+
+        <!-- Yer Adı -->
+        <TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+            <TextInputEditText
+                android:id="@+id/etPlaceName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Yer Adı"
+                android:textSize="16sp"
+                android:inputType="text" />
+        </TextInputLayout>
+
+        <!-- Yer Özellikleri -->
+        <TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+            <TextInputEditText
+                android:id="@+id/etPlaceFeatures"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Yer Özellikleri"
+                android:textSize="16sp"
+                android:inputType="text" />
+        </TextInputLayout>
+
+        <!-- Yorum -->
+        <TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+            <TextInputEditText
+                android:id="@+id/etReview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Yer Yorumları"
+                android:textSize="16sp"
+                android:inputType="textMultiLine" />
+        </TextInputLayout>
+
+        <!-- Gezi Tarihi -->
+        <TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+            <TextInputEditText
+                android:id="@+id/etVisitDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Gezi Tarihi (GG/AA/YYYY)"
+                android:textSize="16sp"
+                android:inputType="date" />
+        </TextInputLayout>
+
+        <!-- Kaydet Butonu -->
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Kaydet"
+            android:textSize="18sp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="30dp"
+            android:layout_gravity="center"/>
+
+        <!-- Sosyal Medya ve İletişim Bilgileri -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bize Ulaşın"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:paddingTop="32dp"
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
+
+        <!-- Sosyal Medya Bağlantıları ve İletişim -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="16dp">
+
+            <!-- Instagram Linki -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Instagram: @gezikutuphanesi"
+                android:textSize="16sp"
+                android:autoLink="web"
+                android:linksClickable="true"
+                android:paddingTop="8dp"
+                android:layout_gravity="center"/>
+
+            <!-- Twitter Linki -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Twitter: @gezikutuphanesi"
+                android:textSize="16sp"
+                android:autoLink="web"
+                android:linksClickable="true"
+                android:paddingTop="8dp"
+                android:layout_gravity="center"/>
+
+            <!-- E-posta Adresi -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="E-posta: info@gezikutuphanesi.com"
+                android:textSize="16sp"
+                android:autoLink="email"
+                android:linksClickable="true"
+                android:paddingTop="8dp"
+                android:layout_gravity="center"/>
+
+            <!-- Telefon Numarası -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Telefon: +90 123 456 78 90"
+                android:textSize="16sp"
+                android:autoLink="phone"
+                android:linksClickable="true"
+                android:paddingTop="8dp"
+                android:layout_gravity="center"/>
+
+            <!-- Genel Web Linki -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Web Site: www.gezikutuphanesi.com"
+                android:textSize="16sp"
+                android:autoLink="web"
+                android:linksClickable="true"
+                android:paddingTop="8dp"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>
+

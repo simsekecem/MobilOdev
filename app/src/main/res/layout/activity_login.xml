@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#343434">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="100dp"
+                android:layout_marginBottom="100dp"
+                android:text="Login"
+                android:textColor="#ffffff"
+                android:textSize="40dp"
+                android:textStyle="bold" />
+            <EditText
+                android:id="@+id/editTextTextPersonName"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Username"
+                android:textColorHint="#ffffff"
+                android:padding="8dp"
+                android:drawablePadding="16dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:drawableStart="@drawable/email"
+                android:layout_marginTop="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:background="@drawable/edittext_background"/>
+            <EditText
+                android:id="@+id/editTextTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Password"
+                android:textColorHint="#ffffff"
+                android:padding="8dp"
+                android:drawablePadding="16dp"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:drawableStart="@drawable/password"
+                android:layout_marginTop="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:background="@drawable/edittext_background"/>
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="32sp"
+                android:layout_marginBottom="64dp"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/btn_login"/>
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Are you a new user? Sign up"
+                android:textColor="#E1A500"
+                android:textStyle="bold"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="32dp"
+                android:textAlignment="center"/>
+
+            <!-- Sosyal Medya ve İletişim Bilgileri -->
+
+
+            <!-- Sosyal Medya Bağlantıları ve İletişim -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="16dp"
+                android:paddingBottom="32dp"
+                android:paddingStart="60dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bize Ulaşın"
+                    android:textSize="24sp"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold"
+                    android:paddingBottom="15dp"
+                    android:paddingStart="60dp"/>
+                <!-- Instagram Linki -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Instagram: @gezikutuphanesi"
+                    android:textSize="16sp"
+                    android:textColor="#ffffff"
+                    android:autoLink="web"
+                    android:linksClickable="true"
+                    android:paddingTop="8dp"/>
+
+                <!-- Twitter Linki -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Twitter: @gezikutuphanesi"
+                    android:textSize="16sp"
+                    android:textColor="#ffffff"
+                    android:autoLink="web"
+                    android:linksClickable="true"
+                    android:paddingTop="8dp" />
+
+                <!-- E-posta Adresi -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="E-posta: info@gezikutuphanesi.com"
+                    android:textSize="16sp"
+                    android:textColor="#ffffff"
+                    android:autoLink="email"
+                    android:linksClickable="true"
+                    android:paddingTop="8dp" />
+
+                <!-- Telefon Numarası -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Telefon: +90 123 456 78 90"
+                    android:textSize="16sp"
+                    android:textColor="#ffffff"
+                    android:autoLink="phone"
+                    android:linksClickable="true"
+                    android:paddingTop="8dp" />
+
+                <!-- Genel Web Linki -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Web Site: www.gezikutuphanesi.com"
+                    android:textSize="16sp"
+                    android:textColor="#ffffff"
+                    android:autoLink="web"
+                    android:linksClickable="true"
+                    android:paddingTop="8dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

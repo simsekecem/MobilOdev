@@ -105,14 +105,14 @@
                 android:background="@drawable/edittext_background"/>
 
 
-
             <Button
+                android:id="@+id/GuncelButon"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
-                android:text="Güncelle"
-                android:background="#e1a500"
                 android:layout_marginStart="250dp"
-                android:layout_marginTop="40dp"/>
+                android:layout_marginTop="40dp"
+                android:background="#e1a500"
+                android:text="Güncelle" />
 
             <TextView
                 android:id="@+id/textView5"

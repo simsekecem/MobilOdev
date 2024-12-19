@@ -36,7 +36,7 @@ class LoginFragment : Fragment() {
         editTextTextPassword = view.findViewById(R.id.editTextTextPassword)
         imageView4 = view.findViewById(R.id.imageView4)
 
-        // Copy database if it doesn't exist
+        // Copy database
         copyDatabase(requireContext())
 
         // Open the database

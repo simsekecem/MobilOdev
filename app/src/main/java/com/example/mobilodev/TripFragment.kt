@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.example.mobilodev.R
 
 class TripFragment : Fragment() {
 
@@ -21,7 +22,7 @@ class TripFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate( R.layout.fragment_trip,container, false)
+        return inflater.inflate(R.layout.activity_trip, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

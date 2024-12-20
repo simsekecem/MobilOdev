@@ -21,35 +21,29 @@ class TripFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        return inflater.inflate(R.layout.fragment_trip, container, false)
+        return inflater.inflate( R.layout.fragment_trip,container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         databaseHelper = DatabaseHelper(requireContext())
         loadTripsFromDatabase()
 
-
         val tripListLayout: LinearLayout = view.findViewById(R.id.tripListLayout)
-
 
         for (trip in tripList) {
             val tripView = LayoutInflater.from(requireContext()).inflate(R.layout.item_trip, tripListLayout, false)
-
 
             val imageView: ImageView = tripView.findViewById(R.id.tripImage)
             val descriptionTextView: TextView = tripView.findViewById(R.id.tripDescription)
             val commentTextView: TextView = tripView.findViewById(R.id.tripComment)
 
-            imageView.setImageBitmap(trip.image) // Set the trip image
-            descriptionTextView.text = trip.description // Set the description
-            commentTextView.text = trip.comment // Set the comment
+            imageView.setImageBitmap(trip.image) // Görseli ayarla
+            descriptionTextView.text = trip.description // Açıklamayı ayarla
+            commentTextView.text = trip.comment // Yorumu ayarla
 
-            // Add the trip view to the LinearLayout
-            tripListLayout.addView(tripView)
+            tripListLayout.addView(tripView) // LinearLayout'a ekle
         }
     }
 
@@ -62,9 +56,7 @@ class TripFragment : Fragment() {
             val description = cursor.getString(cursor.getColumnIndexOrThrow("description"))
             val comment = cursor.getString(cursor.getColumnIndexOrThrow("comment"))
 
-
             val imageBitmap = base64ToBitmap(imageBase64)
-
 
             tripList.add(Trip(imageBitmap, description, comment))
         }

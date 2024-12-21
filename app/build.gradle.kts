@@ -47,4 +47,6 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.6.0")
+
 }

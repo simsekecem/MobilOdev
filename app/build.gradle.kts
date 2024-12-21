@@ -7,6 +7,7 @@ android {
     namespace = "com.example.mobilodev"
     compileSdk = 34
 
+
     defaultConfig {
         applicationId = "com.example.mobilodev"
         minSdk = 24

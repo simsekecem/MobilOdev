@@ -31,7 +31,7 @@ class TripFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.activity_user, container, false)
+        return inflater.inflate(R.layout.activity_trip, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

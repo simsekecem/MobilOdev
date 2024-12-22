@@ -90,12 +90,14 @@
                     android:orientation="vertical">
 
                     <HorizontalScrollView
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="16dp"
                         android:paddingBottom="16dp">
 
                         <LinearLayout
+
                             android:orientation="horizontal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
@@ -168,6 +170,7 @@
                     </HorizontalScrollView>
 
                     <TextView
+                        android:id="@+id/tvDescription"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -176,6 +179,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/tvDescription"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -185,6 +189,7 @@
 
                     <!-- Yorum ve Profil Fotoğrafı -->
                     <LinearLayout
+                        android:id="@+id/llCommentAndProfile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -193,6 +198,7 @@
 
                         <!-- Yuvarlak Profil Fotoğrafı -->
                         <ImageView
+                            android:id="@+id/ivProfileImage"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:layout_marginEnd="8dp"
@@ -202,6 +208,7 @@
 
                         <!-- Yorum metni -->
                         <TextView
+                            android:id="@+id/tvComment"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"

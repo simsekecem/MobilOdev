@@ -24,7 +24,7 @@ class TripFragment : Fragment() {
     private lateinit var btnSignUp: Button
     private lateinit var etSearch: EditText
     private lateinit var recyclerView: RecyclerView
-    private lateinit var dbHelper: DatabaseHelper
+    private lateinit var databaseHelper: DatabaseHelper
     private lateinit var tripAdapter: ExperienceAdapter
 
     override fun onCreateView(
@@ -45,7 +45,7 @@ class TripFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerView)  // RecyclerView'u bağla
 
         // DatabaseHelper'ı initialize et
-        dbHelper = DatabaseHelper(requireContext())
+        databaseHelper = DatabaseHelper(requireContext())
 
         // RecyclerView ayarları
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -69,7 +69,7 @@ class TripFragment : Fragment() {
 
     private fun loadTrips() {
         // Veritabanından tüm tripleri alınır
-        val trips = dbHelper.getAllTrips()
+        val trips = databaseHelper.getAllTrips()
 
         // RecyclerView adapter'ına verileri ekleyin
         tripAdapter = ExperienceAdapter(trips)
@@ -78,7 +78,7 @@ class TripFragment : Fragment() {
 
     private fun searchTrips(query: String) {
         // Arama işlemi: Veritabanından filtrelenmiş sonuçları getir
-        val filteredTrips = dbHelper.searchTrips(query)
+        val filteredTrips = databaseHelper.searchTrips(query)
 
         // RecyclerView adapter'ına filtrelenmiş verileri ekleyin
         tripAdapter = ExperienceAdapter(filteredTrips)

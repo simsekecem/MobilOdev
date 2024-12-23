@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:id="@+id/main">
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Gezi Kütüphanesi"
+            android:textColor="@color/purple_700"
             android:textSize="24sp"
             android:gravity="center"
             android:paddingBottom="16dp"
@@ -84,247 +85,12 @@
                 android:layout_gravity="end"
                 android:text="Tümünü gör" />
         </LinearLayout>
-        <!-- Kaydırılabilir Resim Galerisi 1 -->
-        <HorizontalScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="16dp"
-            android:paddingBottom="16dp">
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <!-- Resim ve Metin 1 -->
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginEnd="16dp">
-
-                    <ImageView
-                        android:layout_width="200dp"
-                        android:layout_height="200dp"
-                        android:src="@drawable/image1"
-                        android:contentDescription="Gezi Resmi 1" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Gezi Resmi 1"
-                        android:gravity="center"
-                        android:paddingTop="8dp"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Açıklama metni 1."
-                        android:gravity="center"
-                        android:paddingTop="4dp"
-                        android:textSize="14sp" />
-
-                    <!-- Yorum ve Profil Fotoğrafı -->
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:paddingTop="8dp">
-
-                        <!-- Yuvarlak Profil Fotoğrafı -->
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@drawable/profile_image"
-                            android:layout_marginEnd="8dp"
-                            android:scaleType="centerCrop"
-                            android:background="@drawable/circular_border" />
-
-                        <!-- Yorum metni -->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="yorum metni 1"
-                            android:textSize="14sp"
-                            android:gravity="center_vertical" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <!-- Resim ve Metin 2 -->
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginEnd="16dp">
-
-                    <ImageView
-                        android:layout_width="200dp"
-                        android:layout_height="200dp"
-                        android:src="@drawable/image2"
-                        android:contentDescription="Gezi Resmi 2" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Gezi Resmi 2"
-                        android:gravity="center"
-                        android:paddingTop="8dp"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Açıklama metni 2."
-                        android:gravity="center"
-                        android:paddingTop="4dp"
-                        android:textSize="14sp" />
-
-                    <!-- Yorum ve Profil Fotoğrafı -->
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:paddingTop="8dp">
-
-                        <!-- Yuvarlak Profil Fotoğrafı -->
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@drawable/profile_image"
-                            android:layout_marginEnd="8dp"
-                            android:scaleType="centerCrop"
-                            android:background="@drawable/circular_border" />
-
-                        <!-- Yorum metni -->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="yprum metni 2"
-                            android:textSize="14sp"
-                            android:gravity="center_vertical" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <!-- Resim ve Metin 3 -->
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginEnd="16dp">
-
-                    <ImageView
-                        android:layout_width="200dp"
-                        android:layout_height="200dp"
-                        android:src="@drawable/image3"
-                        android:contentDescription="Gezi Resmi 3" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Gezi Resmi 3"
-                        android:gravity="center"
-                        android:paddingTop="8dp"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Açıklama metni 3."
-                        android:gravity="center"
-                        android:paddingTop="4dp"
-                        android:textSize="14sp" />
-
-                    <!-- Yorum ve Profil Fotoğrafı -->
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:paddingTop="8dp">
-
-                        <!-- Yuvarlak Profil Fotoğrafı -->
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@drawable/profile_image"
-                            android:layout_marginEnd="8dp"
-                            android:scaleType="centerCrop"
-                            android:background="@drawable/circular_border" />
-
-                        <!-- Yorum metni -->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="yprum metni 3"
-                            android:textSize="14sp"
-                            android:gravity="center_vertical" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <!-- Resim ve Metin 4 -->
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginEnd="16dp">
-
-                    <ImageView
-                        android:layout_width="200dp"
-                        android:layout_height="200dp"
-                        android:src="@drawable/image4"
-                        android:contentDescription="Gezi Resmi 4" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Gezi Resmi 4"
-                        android:gravity="center"
-                        android:paddingTop="8dp"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Açıklama metni 4."
-                        android:gravity="center"
-                        android:paddingTop="4dp"
-                        android:textSize="14sp" />
-
-                    <!-- Yorum ve Profil Fotoğrafı -->
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:paddingTop="8dp">
-
-                        <!-- Yuvarlak Profil Fotoğrafı -->
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@drawable/profile_image"
-                            android:layout_marginEnd="8dp"
-                            android:scaleType="centerCrop"
-                            android:background="@drawable/circular_border" />
-
-                        <!-- Yorum metni -->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="yorum metni 4"
-                            android:textSize="14sp"
-                            android:gravity="center_vertical" />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-        </HorizontalScrollView>
+            android:paddingBottom="16dp"/>
 
         <!-- metin -->
         <TextView
@@ -342,247 +108,14 @@
             android:gravity="center"
             android:paddingTop="8dp"
             android:textSize="16sp" />
-        <!--horizantalscrollview 2 -->
-        <HorizontalScrollView
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView6"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="242dp"
             android:paddingTop="16dp"
-            android:paddingBottom="16dp">
+            android:paddingBottom="16dp" />
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <!-- Resim ve Metin 5 -->
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginEnd="16dp">
-
-                    <ImageView
-                        android:layout_width="200dp"
-                        android:layout_height="200dp"
-                        android:src="@drawable/image5"
-                        android:contentDescription="Gezi Resmi 5" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Gezi Resmi 5"
-                        android:gravity="center"
-                        android:paddingTop="8dp"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Açıklama metni 5."
-                        android:gravity="center"
-                        android:paddingTop="4dp"
-                        android:textSize="14sp" />
-
-                    <!-- Yorum ve Profil Fotoğrafı -->
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:paddingTop="8dp">
-
-                        <!-- Yuvarlak Profil Fotoğrafı -->
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@drawable/profile_image"
-                            android:layout_marginEnd="8dp"
-                            android:scaleType="centerCrop"
-                            android:background="@drawable/circular_border" />
-
-                        <!-- Yorum metni -->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="yorum metni 5"
-                            android:textSize="14sp"
-                            android:gravity="center_vertical" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <!-- Resim ve Metin 6 -->
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginEnd="16dp">
-
-                    <ImageView
-                        android:layout_width="200dp"
-                        android:layout_height="200dp"
-                        android:src="@drawable/image6"
-                        android:contentDescription="Gezi Resmi 6" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Gezi Resmi 6"
-                        android:gravity="center"
-                        android:paddingTop="8dp"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Açıklama metni 6."
-                        android:gravity="center"
-                        android:paddingTop="4dp"
-                        android:textSize="14sp" />
-
-                    <!-- Yorum ve Profil Fotoğrafı -->
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:paddingTop="8dp">
-
-                        <!-- Yuvarlak Profil Fotoğrafı -->
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@drawable/profile_image"
-                            android:layout_marginEnd="8dp"
-                            android:scaleType="centerCrop"
-                            android:background="@drawable/circular_border" />
-
-                        <!-- Yorum metni -->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="yorum metni 6"
-                            android:textSize="14sp"
-                            android:gravity="center_vertical" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <!-- Resim ve Metin 7 -->
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginEnd="16dp">
-
-                    <ImageView
-                        android:layout_width="200dp"
-                        android:layout_height="200dp"
-                        android:src="@drawable/image7"
-                        android:contentDescription="Gezi Resmi 7" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Gezi Resmi 7"
-                        android:gravity="center"
-                        android:paddingTop="8dp"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Açıklama metni 7."
-                        android:gravity="center"
-                        android:paddingTop="4dp"
-                        android:textSize="14sp" />
-
-                    <!-- Yorum ve Profil Fotoğrafı -->
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:paddingTop="8dp">
-
-                        <!-- Yuvarlak Profil Fotoğrafı -->
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@drawable/profile_image"
-                            android:layout_marginEnd="8dp"
-                            android:scaleType="centerCrop"
-                            android:background="@drawable/circular_border" />
-
-                        <!-- Yorum metni -->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="yorum metni 7"
-                            android:textSize="14sp"
-                            android:gravity="center_vertical" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <!-- Resim ve Metin 8 -->
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginEnd="16dp">
-
-                    <ImageView
-                        android:layout_width="200dp"
-                        android:layout_height="200dp"
-                        android:src="@drawable/image8"
-                        android:contentDescription="Gezi Resmi 8" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Gezi Resmi 8"
-                        android:gravity="center"
-                        android:paddingTop="8dp"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Açıklama metni 8."
-                        android:gravity="center"
-                        android:paddingTop="4dp"
-                        android:textSize="14sp" />
-
-                    <!-- Yorum ve Profil Fotoğrafı -->
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:paddingTop="8dp">
-
-                        <!-- Yuvarlak Profil Fotoğrafı -->
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@drawable/profile_image"
-                            android:layout_marginEnd="8dp"
-                            android:scaleType="centerCrop"
-                            android:background="@drawable/circular_border" />
-
-                        <!-- Yorum metni -->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="yorum metni 8"
-                            android:textSize="14sp"
-                            android:gravity="center_vertical" />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-        </HorizontalScrollView>
 
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -598,6 +131,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Bize Ulaşın"
+                android:textColor="@color/purple_700"
                 android:textSize="24sp"
                 android:gravity="center"
                 android:paddingTop="32dp"

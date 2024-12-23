@@ -14,6 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Gezilen Yer"
+            android:textColor="@color/purple_700"
             android:textSize="22sp"
             android:gravity="center"
             android:textStyle="bold"
@@ -31,58 +32,31 @@
         <!-- Horizontal Scroll for Photos -->
 
         <!-- Kullanıcı Adı -->
-        <HorizontalScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="195dp"
             android:layout_marginBottom="16dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <!-- Multiple ImageViews for photos -->
                 <ImageView
-                    android:id="@+id/imgPhoto1"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                    android:layout_width="378dp"
+                    android:layout_height="match_parent"
                     android:layout_marginEnd="8dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/photo_example" />
-
-                <ImageView
-                    android:id="@+id/imgPhoto2"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_marginEnd="8dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/photo_example" />
-
-                <!-- You can add more ImageViews as needed -->
-                <ImageView
-                    android:id="@+id/imgPhoto3"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_marginEnd="8dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/photo_example" />
-
-                <ImageView
-                    android:id="@+id/imgPhoto4"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_marginEnd="8dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/photo_example" />
+                    android:src="@drawable/imgPhoto1" />
 
             </LinearLayout>
-        </HorizontalScrollView>
+        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tvUsername"
-            android:text="Kullanıcı Adı: @username"
+            android:text="Kullanıcı Adı: @tvUsername"
             android:textSize="18sp"
             android:gravity="center"
             android:textStyle="bold"
@@ -102,16 +76,16 @@
                 android:inputType="text" />
         </TextInputLayout>
 
-        <!-- Yer Özellikleri -->
+        <!-- Yer puanı -->
         <TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp">
             <TextInputEditText
-                android:id="@+id/etPlaceFeatures"
+                android:id="@+id/etPlaceRate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Yer Özellikleri"
+                android:hint="Puan"
                 android:textSize="16sp"
                 android:inputType="text" />
         </TextInputLayout>
@@ -130,20 +104,6 @@
                 android:inputType="textMultiLine" />
         </TextInputLayout>
 
-        <!-- Gezi Tarihi -->
-        <TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
-            <TextInputEditText
-                android:id="@+id/etVisitDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Gezi Tarihi (GG/AA/YYYY)"
-                android:textSize="16sp"
-                android:inputType="date" />
-        </TextInputLayout>
-
         <!-- Kaydet Butonu -->
         <Button
             android:id="@+id/btnSave"
@@ -160,6 +120,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Bize Ulaşın"
+            android:textColor="@color/purple_700"
             android:textSize="24sp"
             android:gravity="center"
             android:paddingTop="32dp"

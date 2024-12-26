@@ -50,7 +50,10 @@ class UpdateProfileFragment : Fragment() {
         setupImagePicker()
 
         profileImageView.setOnClickListener { openImagePicker() }
-        updateButton.setOnClickListener { handleUpdateProfile() }
+        updateButton.setOnClickListener {
+            handleUpdateProfile()
+
+        }
     }
 
     private fun setupImagePicker() {

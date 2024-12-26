@@ -2,12 +2,13 @@ package com.example.mobilodev
 
 import android.app.Activity
 import android.content.Intent
+import android.database.Cursor
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.graphics.ImageDecoder
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,27 +20,24 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.example.myapplication.DatabaseHelper
-import java.io.ByteArrayOutputStream
 import java.io.IOException
 
 class SignUpFragment : Fragment() {
-
 
     private var editTextTextPersonName2: EditText? = null
     private var editTextTextPersonName: EditText? = null
     private lateinit var textLogin: TextView
     private var editTextTextPassword: EditText? = null
     private var editTextTextPassword2: EditText? = null
-    private var textView1: EditText? = null
     private var imageView1: ImageView? = null
     private var profil: ImageView? = null
     private var selectedImageBitmap: Bitmap? = null
+    private var selectedImagePath: String? = null
     private lateinit var databaseHelper: DatabaseHelper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.activity_sign_up, container, false)
     }
 
@@ -54,25 +52,24 @@ class SignUpFragment : Fragment() {
         imageView1 = view.findViewById(R.id.imageView1)
         profil = view.findViewById(R.id.profil)
 
-        textLogin.setOnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, SignUpFragment())
-                .addToBackStack(null)
-                .commit()
-        }
-
-        // Initialize DatabaseHelper
         databaseHelper = DatabaseHelper(requireContext())
 
-        // Resim seçme işlemi başlatıcı
         val imagePickerLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
             if (result.resultCode == Activity.RESULT_OK && result.data != null) {
                 val imageUri: Uri? = result.data!!.data
                 try {
-                    selectedImageBitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, imageUri)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                        val source = ImageDecoder.createSource(requireActivity().contentResolver, imageUri!!)
+                        selectedImageBitmap = ImageDecoder.decodeBitmap(source)
+                    } else {
+                        @Suppress("DEPRECATION")
+                        selectedImageBitmap =
+                            MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, imageUri)
+                    }
                     profil?.setImageBitmap(selectedImageBitmap)
+                    selectedImagePath = getPathFromUri(imageUri!!)
                 } catch (e: IOException) {
                     e.printStackTrace()
                     Toast.makeText(requireContext(), "Resim seçilemedi", Toast.LENGTH_SHORT).show()
@@ -80,7 +77,6 @@ class SignUpFragment : Fragment() {
             }
         }
 
-        // Profil resmine tıklanınca galeri açılır
         profil?.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             imagePickerLauncher.launch(intent)
@@ -102,22 +98,18 @@ class SignUpFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            // Eğer profil resmi seçilmemişse, standart resmi kullan
-            if (selectedImageBitmap == null) {
-                selectedImageBitmap = BitmapFactory.decodeResource(resources, R.drawable.standart)
+            if (selectedImagePath == null) {
+                Toast.makeText(requireContext(), "Lütfen bir profil resmi seçin", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
 
-            // Bitmap'i Base64 stringine dönüştür
-            val imageBase64 = bitmapToBase64(selectedImageBitmap!!)
-
-            // Kullanıcıyı veritabanına ekle
-            val isInserted = databaseHelper.registerUser(username, name, password, imageBase64)
+            val isInserted = databaseHelper.registerUser(username, name, password, selectedImagePath!!)
 
             if (isInserted) {
                 Toast.makeText(requireContext(), "Kayıt başarılı", Toast.LENGTH_SHORT).show()
                 databaseHelper.setCurrentUser(username)
                 parentFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, MainFragment()) // Adjust the container ID if necessary
+                    .replace(R.id.fragment_container, MainFragment())
                     .commit()
             } else {
                 Toast.makeText(requireContext(), "Kayıt başarısız", Toast.LENGTH_SHORT).show()
@@ -125,11 +117,16 @@ class SignUpFragment : Fragment() {
         }
     }
 
-    // Bitmap'i Base64 stringine dönüştüren metod
-    private fun bitmapToBase64(bitmap: Bitmap): String {
-        val byteArrayOutputStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
-        val byteArray = byteArrayOutputStream.toByteArray()
-        return Base64.encodeToString(byteArray, Base64.DEFAULT)
+    private fun getPathFromUri(uri: Uri): String? {
+        var path: String? = null
+        val projection = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor: Cursor? = requireActivity().contentResolver.query(uri, projection, null, null, null)
+        cursor?.use {
+            if (it.moveToFirst()) {
+                val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+                path = it.getString(columnIndex)
+            }
+        }
+        return path
     }
 }

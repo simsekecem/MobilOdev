@@ -2,7 +2,7 @@ package com.example.mobilodev
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -25,7 +25,7 @@ class ProfileFragment : Fragment() {
     private lateinit var profileImageView: ImageView
     private lateinit var updateButton: Button
     private lateinit var imagePickerLauncher: ActivityResultLauncher<Intent>
-    private var selectedProfileImage: Bitmap? = null
+    private var selectedProfileImageUri: Uri? = null
     private lateinit var dbHelper: DatabaseHelper
 
     override fun onCreateView(
@@ -53,7 +53,6 @@ class ProfileFragment : Fragment() {
         updateButton.setOnClickListener {
             handleUpdateProfile()
             requireActivity().supportFragmentManager.popBackStack()
-
         }
     }
 
@@ -61,9 +60,10 @@ class ProfileFragment : Fragment() {
         imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == android.app.Activity.RESULT_OK) {
                 val imageUri = result.data?.data
-                val bitmap = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, imageUri)
-                profileImageView.setImageBitmap(bitmap)
-                selectedProfileImage = bitmap
+                if (imageUri != null) {
+                    profileImageView.setImageURI(imageUri)
+                    selectedProfileImageUri = imageUri // Fotoğraf URI'sini saklıyoruz
+                }
             }
         }
     }
@@ -86,7 +86,7 @@ class ProfileFragment : Fragment() {
                     username = username,
                     password = password,
                     name = name,
-                    profilePhoto = selectedProfileImage?.let { saveImageToLocal(it) }
+                    profilePhoto = selectedProfileImageUri?.toString() // Fotoğraf yolu URI olarak saklanır
                 )
                 if (success) {
                     Toast.makeText(requireContext(), "Profil güncellendi", Toast.LENGTH_SHORT).show()
@@ -99,14 +99,5 @@ class ProfileFragment : Fragment() {
         } else {
             Toast.makeText(requireContext(), "Lütfen tüm alanları doldurun", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    private fun saveImageToLocal(bitmap: Bitmap): String {
-        // Save the bitmap to local storage and return its path
-        val filename = "profile_${System.currentTimeMillis()}.png"
-        val fileOutputStream = requireContext().openFileOutput(filename, Context.MODE_PRIVATE)
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream)
-        fileOutputStream.close()
-        return requireContext().filesDir.absolutePath + "/" + filename
     }
 }

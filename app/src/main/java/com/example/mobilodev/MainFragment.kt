@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mobiloodev.Experience
 import com.example.myapplication.Place
 
-class UserFragment : Fragment() {
+class MainFragment : Fragment() {
 
     private lateinit var databaseHelper: DatabaseHelper
     private lateinit var experienceAdapter1: ExperienceAdapter
@@ -24,7 +24,7 @@ class UserFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout using the activity_trip layout instead of using ViewBinding
-        return inflater.inflate(R.layout.activity_user, container, false)
+        return inflater.inflate(R.layout.activity_main, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -76,6 +76,7 @@ class UserFragment : Fragment() {
     // Database'den kullanıcının gezilerini getir
     private fun getUserTrips(): List<Place> {
         return databaseHelper.getUserTrips() // Kullanıcıya ait veriyi al
+
     }
 }
 

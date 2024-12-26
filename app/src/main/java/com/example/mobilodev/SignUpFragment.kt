@@ -1,10 +1,7 @@
 package com.example.mobilodev
 
 import android.app.Activity
-import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
-import android.database.sqlite.SQLiteDatabase
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -20,6 +17,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import com.example.myapplication.DatabaseHelper
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 
@@ -32,6 +30,7 @@ class SignUpFragment : Fragment() {
     private var imageView4: ImageView? = null
     private var profil: ImageView? = null
     private var selectedImageBitmap: Bitmap? = null
+    private lateinit var databaseHelper: DatabaseHelper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -49,6 +48,9 @@ class SignUpFragment : Fragment() {
         editTextTextPassword2 = view.findViewById(R.id.editTextTextPassword2)
         imageView4 = view.findViewById(R.id.imageView4)
         profil = view.findViewById(R.id.profil)
+
+        // Initialize DatabaseHelper
+        databaseHelper = DatabaseHelper(requireContext())
 
         // Resim seçme işlemi başlatıcı
         val imagePickerLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
@@ -96,19 +98,10 @@ class SignUpFragment : Fragment() {
             // Bitmap'i Base64 stringine dönüştür
             val imageBase64 = bitmapToBase64(selectedImageBitmap!!)
 
-            val db: SQLiteDatabase = requireContext().openOrCreateDatabase("mobilyazilimfinal.db", Context.MODE_PRIVATE, null)
-            db.execSQL("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, name TEXT, password TEXT, profile_picture TEXT)")
+            // Kullanıcıyı veritabanına ekle
+            val isInserted = databaseHelper.registerUser(username, name, password, imageBase64)
 
-            val values = ContentValues()
-            values.put("username", username)
-            values.put("name", name)
-            values.put("password", password)
-            values.put("profile_picture", imageBase64)
-
-            val result = db.insert("users", null, values)
-            db.close()
-
-            if (result != -1L) {
+            if (isInserted) {
                 Toast.makeText(requireContext(), "Kayıt başarılı", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(requireContext(), "Kayıt başarısız", Toast.LENGTH_SHORT).show()

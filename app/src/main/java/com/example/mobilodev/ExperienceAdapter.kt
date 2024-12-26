@@ -7,12 +7,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mobilodev.R
+import com.example.myapplication.Place
 
 // Veriler için Experience sınıfı
 data class Experience(val title: String, val rating: String, val comment: String, val imageResId: Int)
 
 // RecyclerView için Adapter sınıfı
-class ExperienceAdapter(private var experienceList: List<Experience>) :
+class ExperienceAdapter(private var experienceList: List<Place>) :
     RecyclerView.Adapter<ExperienceAdapter.ExperienceViewHolder>() {
 
     // ViewHolder sınıfı: item_experience.xml ile bağlanır

@@ -14,12 +14,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MobilOdev"
         tools:targetApi="31">
+
+        <!-- Remove MainActivity -->
+        <!-- <activity android:name=".MainActivity" android:exported="true" /> -->
+
+        <!-- Set NewMainActivity as the launcher activity -->
         <activity
-            android:name=".MainActivity"
+            android:name=".NewMainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

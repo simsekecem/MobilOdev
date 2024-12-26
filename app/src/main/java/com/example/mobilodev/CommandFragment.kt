@@ -15,7 +15,7 @@ import com.example.myapplication.DatabaseHelper
 import java.io.ByteArrayOutputStream
 import android.os.Build
 
-class TravelFragment : Fragment() {
+class CommandFragment : Fragment() {
 
     // Kullanılacak UI bileşenlerini tanımlıyoruz
     private lateinit var etPlaceName: EditText // Seyahat adı girişi
@@ -71,6 +71,7 @@ class TravelFragment : Fragment() {
 
             // Kullanıcıya işlem başarılı mesajı gösterir
             Toast.makeText(requireContext(), "Veri Kaydedildi", Toast.LENGTH_SHORT).show()
+            requireActivity().supportFragmentManager.popBackStack()
         }
 
         return view
@@ -81,7 +82,7 @@ class TravelFragment : Fragment() {
      * Bu yöntem veritabanı veya başka bir veri kaynağından kullanıcı adı almak için düzenlenebilir.
      */
     private fun getUsername(): String {
-        return databaseHelper.getCurrentUsername() ?: "Unknown User" // Eğer kullanıcı adı yoksa varsayılan bir değer döner
+        return DatabaseHelper.currentUsername ?: "Unknown User" // Eğer kullanıcı adı yoksa varsayılan bir değer döner
     }
 
     /**

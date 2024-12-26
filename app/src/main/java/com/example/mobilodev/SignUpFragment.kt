@@ -27,6 +27,7 @@ class SignUpFragment : Fragment() {
     private var editTextTextPersonName: EditText? = null
     private var editTextTextPassword: EditText? = null
     private var editTextTextPassword2: EditText? = null
+    private var textView5: EditText? = null
     private var imageView4: ImageView? = null
     private var profil: ImageView? = null
     private var selectedImageBitmap: Bitmap? = null
@@ -42,12 +43,20 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        editTextTextPersonName = view.findViewById(R.id.editTextTextPersonName)
+        editTextTextPersonName = view.findViewById(R.id.editTextTextPersonName2)
         editTextTextPersonName2 = view.findViewById(R.id.editTextTextPersonName2)
+        textView5 = view.findViewById(R.id.textView5)
         editTextTextPassword = view.findViewById(R.id.editTextTextPassword)
         editTextTextPassword2 = view.findViewById(R.id.editTextTextPassword2)
         imageView4 = view.findViewById(R.id.imageView4)
         profil = view.findViewById(R.id.profil)
+
+        textView5.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, SignUpFragment())
+                .addToBackStack(null)
+                .commit()
+        }
 
         // Initialize DatabaseHelper
         databaseHelper = DatabaseHelper(requireContext())
@@ -103,6 +112,10 @@ class SignUpFragment : Fragment() {
 
             if (isInserted) {
                 Toast.makeText(requireContext(), "Kayıt başarılı", Toast.LENGTH_SHORT).show()
+                databaseHelper.setCurrentUser(username)
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, MainFragment()) // Adjust the container ID if necessary
+                    .commit()
             } else {
                 Toast.makeText(requireContext(), "Kayıt başarısız", Toast.LENGTH_SHORT).show()
             }

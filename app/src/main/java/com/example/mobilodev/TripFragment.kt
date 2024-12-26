@@ -11,7 +11,9 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mobilodev.MainFragment
 import com.example.mobilodev.R
+import com.example.mobilodev.SignUpFragment
 import com.example.mobiloodev.ExperienceAdapter
 import com.example.myapplication.DatabaseHelper
 
@@ -19,7 +21,9 @@ class TripFragment : Fragment() {
 
     private lateinit var btnAddExperience: Button
     private lateinit var btnLogin: Button
+    private lateinit var btnBack: Button
     private lateinit var btnSignUp: Button
+    private lateinit var tvComment: Button
     private lateinit var etSearch: EditText
     private lateinit var recyclerView: RecyclerView
     private lateinit var databaseHelper: DatabaseHelper
@@ -39,6 +43,8 @@ class TripFragment : Fragment() {
         btnAddExperience = view.findViewById(R.id.btnAddExperience)
         btnLogin = view.findViewById(R.id.btnLogin)
         btnSignUp = view.findViewById(R.id.btnSignUp)
+        btnBack = view.findViewById(R.id.btnBack)
+        tvComment = view.findViewById(R.id.tvComment)
         etSearch = view.findViewById(R.id.searchEditText)  // Arama alanını bağla
         recyclerView = view.findViewById(R.id.recyclerView)  // RecyclerView'u bağla
 
@@ -63,6 +69,16 @@ class TripFragment : Fragment() {
 
             override fun afterTextChanged(editable: Editable?) {}
         })
+        btnBack.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
+
+        tvComment.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, MainFragment())
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     private fun loadTrips() {

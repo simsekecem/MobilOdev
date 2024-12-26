@@ -39,7 +39,7 @@ class UpdateProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         nameEditText = view.findViewById(R.id.editTextTextPersonName2)
-        usernameEditText = view.findViewById(R.id.editTextTextPersonName)
+        usernameEditText = view.findViewById(R.id.editTextTextPersonName2)
         passwordEditText = view.findViewById(R.id.editTextTextPassword)
         profileImageView = view.findViewById(R.id.profil)
         updateButton = view.findViewById(R.id.GuncelButon)

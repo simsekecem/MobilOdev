@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mobiloodev.ExperienceAdapter
 import com.example.myapplication.DatabaseHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mobiloodev.Experience
+import com.example.mobilproje.TripFragment
 import com.example.myapplication.Place
 
 class MainFragment : Fragment() {
@@ -24,7 +26,44 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout using the activity_trip layout instead of using ViewBinding
-        return inflater.inflate(R.layout.activity_main, container, false)
+        val view = inflater.inflate(R.layout.activity_main, container, false)
+
+        val buttonLogin = view.findViewById<Button>(R.id.btnLogin)
+        buttonLogin.setOnClickListener {
+            // Fragment2'ye geçiş yap
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, LoginFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
+        val buttonSignUp = view.findViewById<Button>(R.id.btnSignUp)
+        buttonSignUp.setOnClickListener {
+            // Fragment2'ye geçiş yap
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, SignUpFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
+        val buttonAddExperience = view.findViewById<Button>(R.id.btnAddExperience)
+        buttonAddExperience.setOnClickListener {
+            // Fragment2'ye geçiş yap
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, CommandFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
+        val buttonAddExperience2 = view.findViewById<Button>(R.id.btnAddExperience2)
+        buttonAddExperience2.setOnClickListener {
+            // Fragment2'ye geçiş yap
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, TripFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

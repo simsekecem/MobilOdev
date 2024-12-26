@@ -79,7 +79,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         onCreate(db)
     }
 
-    fun setCurrentUser(username: String) {
+    fun setCurrentUser(username: String?) {
         currentUsername = username
     }
 

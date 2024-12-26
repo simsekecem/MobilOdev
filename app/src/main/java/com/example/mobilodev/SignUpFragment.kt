@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -23,12 +24,14 @@ import java.io.IOException
 
 class SignUpFragment : Fragment() {
 
+
     private var editTextTextPersonName2: EditText? = null
     private var editTextTextPersonName: EditText? = null
+    private lateinit var textLogin: TextView
     private var editTextTextPassword: EditText? = null
     private var editTextTextPassword2: EditText? = null
-    private var textView5: EditText? = null
-    private var imageView4: ImageView? = null
+    private var textView1: EditText? = null
+    private var imageView1: ImageView? = null
     private var profil: ImageView? = null
     private var selectedImageBitmap: Bitmap? = null
     private lateinit var databaseHelper: DatabaseHelper
@@ -45,13 +48,13 @@ class SignUpFragment : Fragment() {
 
         editTextTextPersonName = view.findViewById(R.id.editTextTextPersonName2)
         editTextTextPersonName2 = view.findViewById(R.id.editTextTextPersonName2)
-        textView5 = view.findViewById(R.id.textView5)
+        textLogin = view.findViewById(R.id.textLogin)
         editTextTextPassword = view.findViewById(R.id.editTextTextPassword)
         editTextTextPassword2 = view.findViewById(R.id.editTextTextPassword2)
-        imageView4 = view.findViewById(R.id.imageView4)
+        imageView1 = view.findViewById(R.id.imageView1)
         profil = view.findViewById(R.id.profil)
 
-        textView5.setOnClickListener {
+        textLogin.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, SignUpFragment())
                 .addToBackStack(null)
@@ -83,7 +86,7 @@ class SignUpFragment : Fragment() {
             imagePickerLauncher.launch(intent)
         }
 
-        imageView4?.setOnClickListener {
+        imageView1?.setOnClickListener {
             val username = editTextTextPersonName2?.text.toString()
             val name = editTextTextPersonName?.text.toString()
             val password = editTextTextPassword?.text.toString()

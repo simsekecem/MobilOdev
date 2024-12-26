@@ -13,9 +13,9 @@ import com.example.myapplication.DatabaseHelper
 class LoginFragment : Fragment() {
     private lateinit var editTextTextPersonName: EditText
     private lateinit var editTextTextPassword: EditText
-    private lateinit var imageView4: ImageView
+    private lateinit var imageView2: ImageView
     private lateinit var databaseHelper: DatabaseHelper
-    private lateinit var textView5: EditText
+    private lateinit var textView2: EditText
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,10 +30,10 @@ class LoginFragment : Fragment() {
 
         editTextTextPersonName = view.findViewById(R.id.editTextTextPersonName2)
         editTextTextPassword = view.findViewById(R.id.editTextTextPassword)
-        imageView4 = view.findViewById(R.id.imageView4)
-        textView5 = view.findViewById(R.id.textView5)
+        imageView2 = view.findViewById(R.id.imageView2)
+        textView2 = view.findViewById(R.id.textView2)
 
-        textView5.setOnClickListener {
+        textView2.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, SignUpFragment())
                 .addToBackStack(null)
@@ -43,7 +43,7 @@ class LoginFragment : Fragment() {
         // Initialize DatabaseHelper
         databaseHelper = DatabaseHelper(requireContext())
 
-        imageView4.setOnClickListener {
+        imageView2.setOnClickListener {
             val username = editTextTextPersonName.text.toString()
             val password = editTextTextPassword.text.toString()
 

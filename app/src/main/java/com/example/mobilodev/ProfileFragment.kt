@@ -17,7 +17,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.example.myapplication.DatabaseHelper
 
-class UpdateProfileFragment : Fragment() {
+class ProfileFragment : Fragment() {
 
     private lateinit var nameEditText: EditText
     private lateinit var usernameEditText: EditText
@@ -42,7 +42,7 @@ class UpdateProfileFragment : Fragment() {
         usernameEditText = view.findViewById(R.id.editTextTextPersonName2)
         passwordEditText = view.findViewById(R.id.editTextTextPassword)
         profileImageView = view.findViewById(R.id.profil)
-        updateButton = view.findViewById(R.id.GuncelButon)
+        updateButton = view.findViewById(R.id.button1)
 
         // Initialize database helper
         dbHelper = DatabaseHelper(requireContext())
@@ -52,6 +52,7 @@ class UpdateProfileFragment : Fragment() {
         profileImageView.setOnClickListener { openImagePicker() }
         updateButton.setOnClickListener {
             handleUpdateProfile()
+            requireActivity().supportFragmentManager.popBackStack()
 
         }
     }

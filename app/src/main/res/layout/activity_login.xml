@@ -15,7 +15,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
@@ -38,7 +37,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"/>
             <EditText
-                android:id="@+id/editTextTextPersonName2"
+                android:id="@+id/editTextTextPersonName3"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:hint="Username"
@@ -65,7 +64,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="30dp"/>
             <EditText
-                android:id="@+id/editTextTextPassword"
+                android:id="@+id/editTextTextPassword3"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:hint="Password"
@@ -81,7 +80,7 @@
         </LinearLayout>
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/imageView2"
                 android:layout_width="72dp"
                 android:layout_gravity="end"
                 android:layout_marginTop="108sp"
@@ -91,7 +90,7 @@
                 app:srcCompat="@drawable/btn_login"/>
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Are you a new user? Sign up"

@@ -32,10 +32,10 @@ class ExperienceAdapter(private var experienceList: List<Place>) :
 
     override fun onBindViewHolder(holder: ExperienceViewHolder, position: Int) {
         val experience = experienceList[position]
-        holder.titleTextView.text = experience.title
+        holder.titleTextView.text = experience.name
         holder.ratingTextView.text = "Puan: ${experience.rating}" // Rating dinamik olarak geldi
         holder.commentTextView.text = experience.comment
-        holder.imgExperience.setImageResource(experience.imageResId) // Görsel dinamik olarak geldi
+        holder.imgExperience.setImageResource(experience.photoPath) // Görsel dinamik olarak geldi
     }
 
     override fun getItemCount(): Int {
@@ -43,7 +43,7 @@ class ExperienceAdapter(private var experienceList: List<Place>) :
     }
 
     // Veriyi güncellemeye yarayan fonksiyon
-    fun updateData(newExperienceList: List<Experience>) {
+    fun updateData(newExperienceList: List<Place>) {
         experienceList = newExperienceList
         notifyDataSetChanged() // Veriler değiştiğinde RecyclerView'in yeniden yüklenmesini sağlar
     }

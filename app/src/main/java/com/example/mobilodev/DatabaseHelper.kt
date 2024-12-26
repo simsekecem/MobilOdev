@@ -151,8 +151,23 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         return result > 0
     }
 
+    fun getCurrentUserID(): Int? {
+        val username = currentUsername ?: return null
+        val db = this.readableDatabase
+        val query = "SELECT $COLUMN_USER_ID FROM $TABLE_USERS WHERE $COLUMN_USERNAME = ?"
+        val cursor: Cursor = db.rawQuery(query, arrayOf(username))
+        val userId = if (cursor.moveToFirst()) {
+            cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_USER_ID))
+        } else null
+
+        cursor.close()
+        db.close()
+        return userId
+    }
+
     // Yeni Yer Ekleme
-    fun insertPlace(name: String, comment: String?, photoPath: String, userID: Int, rating: Int = 0): Boolean {
+    fun insertPlace(name: String, comment: String?, photoPath: String, rating: Int = 0): Boolean {
+        val userID = getCurrentUserID() ?: return false // Kullanıcı ID'sini al ve null kontrolü yap
         val db = this.writableDatabase
         val contentValues = ContentValues().apply {
             put(COLUMN_PLACE_NAME, name)

@@ -67,7 +67,7 @@ class CommandFragment : Fragment() {
             }
 
             // Veritabanına kaydeder
-            databaseHelper.insertPlace(getUsername(), placeName, placeRate, review, photoByteArrays)
+            databaseHelper.insertPlace(placeName, review, photoByteArrays, placeRate)
 
             // Kullanıcıya işlem başarılı mesajı gösterir
             Toast.makeText(requireContext(), "Veri Kaydedildi", Toast.LENGTH_SHORT).show()

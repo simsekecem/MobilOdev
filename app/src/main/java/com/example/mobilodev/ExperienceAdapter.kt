@@ -1,4 +1,4 @@
-package com.example.mobilodev // Kendi paket adınızı yazın
+package com.example.mobilodev
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

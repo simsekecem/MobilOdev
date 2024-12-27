@@ -11,9 +11,6 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mobilodev.MainFragment
-import com.example.mobilodev.R
-import com.example.mobilodev.ExperienceAdapter
 import com.example.myapplication.DatabaseHelper
 
 class TripFragment : Fragment() {

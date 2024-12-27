@@ -58,6 +58,13 @@ class SignUpFragment : Fragment() {
 
         databaseHelper = DatabaseHelper(requireContext())
 
+        textLogin.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, LoginFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
         imagePickerLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->

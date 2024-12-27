@@ -1,42 +1,55 @@
 package com.example.mobilodev
 
-import android.app.Activity
+import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.example.myapplication.DatabaseHelper
-import java.io.ByteArrayOutputStream
-import android.os.Build
+import android.app.Activity
+
 
 class CommandFragment : Fragment() {
 
-    // Kullanılacak UI bileşenlerini tanımlıyoruz
-    private lateinit var etPlaceName: EditText // Seyahat adı girişi
-    private lateinit var etPlaceRate: EditText // Puan girişi
-    private lateinit var etReview: EditText // Yorum girişi
-    private lateinit var imgPhoto1: ImageView // Fotoğraf göstermek için ImageView
-    private lateinit var btnSave: Button // Kaydet butonu
-    private lateinit var tvUsername: TextView // Kullanıcı adı gösterimi
-    private lateinit var databaseHelper: DatabaseHelper // Veritabanı işlemleri için yardımcı sınıf
-    private var photoUris: MutableList<Uri> = mutableListOf() // Fotoğraf URI'lerini tutar
+    private lateinit var etPlaceName: EditText
+    private lateinit var etPlaceRate: EditText
+    private lateinit var etReview: EditText
+    private lateinit var imgPhoto1: ImageView
+    private lateinit var btnSave: Button
+    private lateinit var tvUsername: TextView
+    private lateinit var databaseHelper: DatabaseHelper
+    private var selectedPhotoUri: Uri? = null
 
-    private val PICK_IMAGE_REQUEST = 1 // Fotoğraf seçme isteği için bir sabit
+    // Fotoğraf seçmek için Activity Result Launcher
+    private lateinit var photoPickerLauncher: ActivityResultLauncher<Intent>
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Fotoğraf seçme işlemini başlatan launcher'ı tanımlıyoruz
+        photoPickerLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+                selectedPhotoUri = result.data?.data
+                imgPhoto1.setImageURI(selectedPhotoUri)
+            }
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Fragment ile ilgili layout'u bağlar
         val view = inflater.inflate(R.layout.activity_command, container, false)
 
-        // Layout'taki view'ları Java/Kotlin nesnelerine bağlar
         tvUsername = view.findViewById(R.id.tvUsername)
         etPlaceName = view.findViewById(R.id.etPlaceName)
         etPlaceRate = view.findViewById(R.id.etPlaceRate)
@@ -44,92 +57,42 @@ class CommandFragment : Fragment() {
         imgPhoto1 = view.findViewById(R.id.imgPhoto1)
         btnSave = view.findViewById(R.id.btnSave)
 
-        // Veritabanı yardımcı sınıfını başlatır
         databaseHelper = DatabaseHelper(requireContext())
 
-        // Kullanıcı adını veritabanından çekip TextView'e yazdırır
         tvUsername.text = "Kullanıcı Adı: ${getUsername()}"
 
-        // Fotoğraf eklemek için tıklama dinleyicisi ekler
         imgPhoto1.setOnClickListener { openImagePicker() }
 
-        // Kaydet butonuna tıklama işlemini tanımlar
         btnSave.setOnClickListener {
-            val placeName = etPlaceName.text.toString() // Kullanıcıdan alınan seyahat adı
-            val placeRate = etPlaceRate.text.toString() // Kullanıcıdan alınan puan
-            val review = etReview.text.toString() // Kullanıcıdan alınan yorum
+            val placeName = etPlaceName.text.toString()
+            val placeRate = etPlaceRate.text.toString().toIntOrNull() ?: 0
+            val review = etReview.text.toString()
 
-            // Fotoğrafları byte array'e dönüştürür
-            val photoByteArrays = mutableListOf<ByteArray>()
-            for (uri in photoUris) {
-                val photoBitmap = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
-                photoByteArrays.add(convertBitmapToByteArray(photoBitmap))
+            if (selectedPhotoUri != null) {
+                val photoPath = selectedPhotoUri.toString()
+                val isInserted = databaseHelper.insertPlace(placeName, review, photoPath, placeRate)
+                if (isInserted) {
+                    Toast.makeText(requireContext(), "Veri Kaydedildi", Toast.LENGTH_SHORT).show()
+                    requireActivity().supportFragmentManager.popBackStack()
+                } else {
+                    Toast.makeText(requireContext(), "Hata oluştu!", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(requireContext(), "Lütfen bir fotoğraf seçin!", Toast.LENGTH_SHORT).show()
             }
-
-            // Veritabanına kaydeder
-            databaseHelper.insertPlace(placeName, review, photoByteArrays, placeRate)
-
-            // Kullanıcıya işlem başarılı mesajı gösterir
-            Toast.makeText(requireContext(), "Veri Kaydedildi", Toast.LENGTH_SHORT).show()
-            requireActivity().supportFragmentManager.popBackStack()
         }
 
         return view
     }
 
-    /**
-     * Veritabanından kullanıcı adını çeker.
-     * Bu yöntem veritabanı veya başka bir veri kaynağından kullanıcı adı almak için düzenlenebilir.
-     */
     private fun getUsername(): String {
-        return DatabaseHelper.currentUsername ?: "Unknown User" // Eğer kullanıcı adı yoksa varsayılan bir değer döner
+        return DatabaseHelper.currentUsername ?: "Unknown User"
     }
 
-    /**
-     * Fotoğraf seçme işlemini başlatır.
-     */
     private fun openImagePicker() {
         val intent = Intent(Intent.ACTION_PICK).apply {
             type = "image/*"
-            // Birden fazla fotoğraf seçilmesine izin ver (Android 14+ için)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-            }
         }
-        startActivityForResult(intent, PICK_IMAGE_REQUEST)
-    }
-
-    /**
-     * Fotoğraf seçme sonucunu işler.
-     */
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
-            if (data.clipData != null) {
-                // Eğer birden fazla fotoğraf seçildiyse
-                val count = data.clipData!!.itemCount
-                for (i in 0 until count) {
-                    val photoUri = data.clipData!!.getItemAt(i).uri
-                    photoUris.add(photoUri)
-
-                    // Fotoğrafı ImageView'de göster
-                    if (i == 0) imgPhoto1.setImageURI(photoUri)
-                }
-            } else {
-                // Eğer sadece bir fotoğraf seçildiyse
-                val photoUri = data.data
-                photoUris.add(photoUri!!)
-                imgPhoto1.setImageURI(photoUri)
-            }
-        }
-    }
-
-    /**
-     * Bitmap'i byte array'e dönüştürür.
-     */
-    private fun convertBitmapToByteArray(bitmap: Bitmap): ByteArray {
-        val stream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-        return stream.toByteArray()
+        photoPickerLauncher.launch(intent)
     }
 }

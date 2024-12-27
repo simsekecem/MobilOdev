@@ -1,16 +1,16 @@
-package com.example.mobiloodev // Kendi paket adınızı yazın
+package com.example.mobilodev // Kendi paket adınızı yazın
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mobilodev.R
 import com.example.myapplication.Place
 
-// Veriler için Experience sınıfı
-data class Experience(val title: String, val rating: String, val comment: String, val imageResId: Int)
+
+
 
 // RecyclerView için Adapter sınıfı
 class ExperienceAdapter(private var experienceList: List<Place>) :
@@ -30,22 +30,19 @@ class ExperienceAdapter(private var experienceList: List<Place>) :
         return ExperienceViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ExperienceViewHolder, position: Int) {
         val experience = experienceList[position]
         holder.titleTextView.text = experience.name
         holder.ratingTextView.text = "Puan: ${experience.rating}" // Rating dinamik olarak geldi
         holder.commentTextView.text = experience.comment
-        holder.imgExperience.setImageResource(experience.photoPath) // Görsel dinamik olarak geldi
+        holder.imgExperience.setImageURI(android.net.Uri.parse(experience.photoPath))
+
     }
 
     override fun getItemCount(): Int {
         return experienceList.size
     }
 
-    // Veriyi güncellemeye yarayan fonksiyon
-    fun updateData(newExperienceList: List<Place>) {
-        experienceList = newExperienceList
-        notifyDataSetChanged() // Veriler değiştiğinde RecyclerView'in yeniden yüklenmesini sağlar
-    }
-}
 
+}

@@ -7,11 +7,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.mobiloodev.ExperienceAdapter
 import com.example.myapplication.DatabaseHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mobiloodev.Experience
-import com.example.mobilproje.TripFragment
 import com.example.myapplication.Place
 
 class MainFragment : Fragment() {
@@ -80,7 +77,7 @@ class MainFragment : Fragment() {
 
     private fun setupRecyclerView1(view: View) {
         // "İlginizi Çekebilir" RecyclerView
-        val recyclerView2 = view.findViewById<RecyclerView>(R.id.recyclerView2)
+        val recyclerView2 = view.findViewById<RecyclerView>(R.id.recyclerView1)
         recyclerView2.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         experienceAdapter1 = ExperienceAdapter(getAllTrips())
         recyclerView2.adapter = experienceAdapter1
@@ -88,7 +85,7 @@ class MainFragment : Fragment() {
 
     private fun setupRecyclerView2(view: View) {
         // "En İyiler" RecyclerView (Rating'e göre sıralama)
-        val recyclerView3 = view.findViewById<RecyclerView>(R.id.recyclerView3)
+        val recyclerView3 = view.findViewById<RecyclerView>(R.id.recyclerView2)
         recyclerView3.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         experienceAdapter2 = ExperienceAdapter(getTopRatedTrips())
         recyclerView3.adapter = experienceAdapter2
@@ -96,7 +93,7 @@ class MainFragment : Fragment() {
 
     private fun setupRecyclerView3(view: View) {
         // "Deneyimlerim" RecyclerView (Kullanıcıya ait veriler)
-        val recyclerView4 = view.findViewById<RecyclerView>(R.id.recyclerView4)
+        val recyclerView4 = view.findViewById<RecyclerView>(R.id.recyclerView3)
         recyclerView4.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         experienceAdapter3 = ExperienceAdapter(getUserTrips())
         recyclerView4.adapter = experienceAdapter3

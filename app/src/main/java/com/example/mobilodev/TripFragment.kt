@@ -1,4 +1,4 @@
-package com.example.mobilproje
+package com.example.mobilodev
 
 import android.os.Bundle
 import android.text.Editable
@@ -13,8 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mobilodev.MainFragment
 import com.example.mobilodev.R
-import com.example.mobilodev.SignUpFragment
-import com.example.mobiloodev.ExperienceAdapter
+import com.example.mobilodev.ExperienceAdapter
 import com.example.myapplication.DatabaseHelper
 
 class TripFragment : Fragment() {

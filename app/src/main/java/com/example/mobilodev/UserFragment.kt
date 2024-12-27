@@ -36,11 +36,18 @@ class UserFragment : Fragment() {
         // DatabaseHelper'ı başlat
         databaseHelper = DatabaseHelper(requireContext())
 
+        // Butonları başlat
+        btnLogout = view.findViewById(R.id.btnLogout)
+        btnComment = view.findViewById(R.id.btnComment)
+        btnProfile = view.findViewById(R.id.btnProfile)
+        btnSeeAll = view.findViewById(R.id.btnSeeAll)
+
         // RecyclerView'lar için layout manager ve adapter ayarları
         setupRecyclerView1(view)
         setupRecyclerView2(view)
         setupRecyclerView3(view)
 
+        // Butonlara tıklama olayları
         btnLogout.setOnClickListener {
             databaseHelper.setCurrentUser(null)
             requireActivity().supportFragmentManager.beginTransaction()
@@ -67,6 +74,7 @@ class UserFragment : Fragment() {
                 .commit()
         }
     }
+
 
     private fun setupRecyclerView1(view: View) {
         // "İlginizi Çekebilir" RecyclerView

@@ -2,6 +2,7 @@ package com.example.mobilodev
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
@@ -18,6 +19,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.myapplication.DatabaseHelper
 import java.io.IOException
@@ -34,6 +36,8 @@ class SignUpFragment : Fragment() {
     private var selectedImageBitmap: Bitmap? = null
     private var selectedImagePath: String? = null
     private lateinit var databaseHelper: DatabaseHelper
+
+    private lateinit var imagePickerLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -54,7 +58,7 @@ class SignUpFragment : Fragment() {
 
         databaseHelper = DatabaseHelper(requireContext())
 
-        val imagePickerLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
+        imagePickerLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
             if (result.resultCode == Activity.RESULT_OK && result.data != null) {
@@ -78,8 +82,7 @@ class SignUpFragment : Fragment() {
         }
 
         profil?.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            imagePickerLauncher.launch(intent)
+            checkPermissionsAndPickImage()
         }
 
         imageView1?.setOnClickListener {
@@ -114,6 +117,48 @@ class SignUpFragment : Fragment() {
             } else {
                 Toast.makeText(requireContext(), "Kayıt başarısız", Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    private fun checkPermissionsAndPickImage() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    android.Manifest.permission.READ_MEDIA_IMAGES
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                openGallery()
+            } else {
+                requestPermissions(arrayOf(android.Manifest.permission.READ_MEDIA_IMAGES), 1)
+            }
+        } else {
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                openGallery()
+            } else {
+                requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), 1)
+            }
+        }
+    }
+
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        imagePickerLauncher.launch(intent)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 1 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            openGallery()
+        } else {
+            Toast.makeText(requireContext(), "İzin verilmedi", Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
 
     <application
         android:allowBackup="true"
@@ -15,10 +17,7 @@
         android:theme="@style/Theme.MobilOdev"
         tools:targetApi="31">
 
-        <!-- Remove MainActivity -->
-        <!-- <activity android:name=".MainActivity" android:exported="true" /> -->
-
-        <!-- Set NewMainActivity as the launcher activity -->
+        <!-- Ana Ekran Aktivitesini Belirleme -->
         <activity
             android:name=".NewMainActivity"
             android:exported="true">

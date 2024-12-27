@@ -7,15 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import com.example.myapplication.DatabaseHelper
 
 class LoginFragment : Fragment() {
-    private lateinit var editTextTextPersonName: EditText
-    private lateinit var editTextTextPassword: EditText
+
+    private lateinit var editTextTextPersonName3: EditText
+    private lateinit var editTextTextPassword3: EditText
     private lateinit var imageView2: ImageView
     private lateinit var databaseHelper: DatabaseHelper
-    private lateinit var textView2: EditText
+    private lateinit var textView2: TextView // Hatalı türlendirme düzeltilerek TextView yapıldı
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,11 +30,13 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        editTextTextPersonName = view.findViewById(R.id.editTextTextPersonName2)
-        editTextTextPassword = view.findViewById(R.id.editTextTextPassword)
+        // View'leri doğru şekilde bağlama
+        editTextTextPersonName3 = view.findViewById(R.id.editTextTextPersonName3)
+        editTextTextPassword3 = view.findViewById(R.id.editTextTextPassword3)
         imageView2 = view.findViewById(R.id.imageView2)
         textView2 = view.findViewById(R.id.textView2)
 
+        // TextView'e tıklama özelliği ekleniyor
         textView2.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, SignUpFragment())
@@ -40,28 +44,31 @@ class LoginFragment : Fragment() {
                 .commit()
         }
 
-        // Initialize DatabaseHelper
+        // DatabaseHelper başlatma
         databaseHelper = DatabaseHelper(requireContext())
 
+        // Giriş butonu (imageView2) tıklama işlemi
         imageView2.setOnClickListener {
-            val username = editTextTextPersonName.text.toString()
-            val password = editTextTextPassword.text.toString()
+            val username = editTextTextPersonName3.text.toString()
+            val password = editTextTextPassword3.text.toString()
 
             if (username.isNotEmpty() && password.isNotEmpty()) {
                 val user = databaseHelper.loginUser(username, password)
                 if (user != null) {
-                    // Login successful
+                    // Giriş başarılı
                     Toast.makeText(requireContext(), "Giriş başarılı", Toast.LENGTH_SHORT).show()
                     databaseHelper.setCurrentUser(username)
-                    // Navigate to the next screen or perform actions on successful login
+                    // Ana ekrana geçiş
                     parentFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, MainFragment()) // Adjust the container ID if necessary
+                        .replace(R.id.fragment_container, UserFragment())
+                        .addToBackStack(null)
                         .commit()
                 } else {
-                    // Invalid credentials
+                    // Geçersiz giriş bilgisi
                     Toast.makeText(requireContext(), "Hatalı kullanıcı adı veya şifre", Toast.LENGTH_SHORT).show()
                 }
             } else {
+                // Eksik bilgi uyarısı
                 Toast.makeText(requireContext(), "Lütfen tüm alanları doldurun", Toast.LENGTH_SHORT).show()
             }
         }

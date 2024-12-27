@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+
 }
 
 android {
@@ -50,6 +51,9 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.navigation:navigation-fragment-ktx:2.6.0")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
-    //implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
-    //implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
+    implementation("com.google.android.material:material:1.11.0")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
+
+
 }

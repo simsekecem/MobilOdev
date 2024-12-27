@@ -30,8 +30,6 @@
             android:paddingBottom="8dp" />
 
         <!-- Horizontal Scroll for Photos -->
-
-        <!-- Kullanıcı Adı -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="195dp"
@@ -63,46 +61,46 @@
             android:paddingBottom="8dp" />
 
         <!-- Yer Adı -->
-        <TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp">
-            <TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPlaceName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Yer Adı"
                 android:textSize="16sp"
                 android:inputType="text" />
-        </TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Yer puanı -->
-        <TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp">
-            <TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPlaceRate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Puan"
                 android:textSize="16sp"
                 android:inputType="text" />
-        </TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Yorum -->
-        <TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp">
-            <TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etReview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Yer Yorumları"
                 android:textSize="16sp"
                 android:inputType="textMultiLine" />
-        </TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Kaydet Butonu -->
         <Button
@@ -192,4 +190,3 @@
     </LinearLayout>
 
 </ScrollView>
-

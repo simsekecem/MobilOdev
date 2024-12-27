@@ -58,6 +58,7 @@ class LoginFragment : Fragment() {
                     // Giriş başarılı
                     Toast.makeText(requireContext(), "Giriş başarılı", Toast.LENGTH_SHORT).show()
                     databaseHelper.setCurrentUser(username)
+                    databaseHelper.setLoginStatus(true)
                     // Ana ekrana geçiş
                     parentFragmentManager.beginTransaction()
                         .replace(R.id.fragment_container, UserFragment())

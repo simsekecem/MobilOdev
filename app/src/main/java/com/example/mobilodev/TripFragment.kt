@@ -70,8 +70,16 @@ class TripFragment : Fragment() {
         }
 
         tvComment.setOnClickListener {
+            val isLoggedIn = databaseHelper.getLoginStatus() // loginStatus'u kontrol et
+
+            val fragment = if (isLoggedIn) {
+                CommandFragment() // Giriş yapılmışsa bu fragment'e git
+            } else {
+                LoginFragment() // Giriş yapılmamışsa bu fragment'e git
+            }
+
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, MainFragment())
+                .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commit()
         }

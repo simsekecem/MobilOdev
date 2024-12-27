@@ -47,6 +47,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         const val COLUMN_PLACE_USER_ID = "userID"
         const val COLUMN_PLACE_RATING = "rating"
         var currentUsername: String? = null
+        var loginStatus: Boolean = false
     }
 
     override fun onCreate(db: SQLiteDatabase) {
@@ -115,6 +116,14 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         cursor.close()
         db.close()
         return user
+    }
+
+    fun getLoginStatus(): Boolean {
+        return loginStatus
+    }
+
+    fun setLoginStatus(status: Boolean) {
+        loginStatus = status
     }
 
     // Kullanıcının Tüm Bilgilerini Getirme

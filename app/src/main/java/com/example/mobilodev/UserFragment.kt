@@ -50,6 +50,7 @@ class UserFragment : Fragment() {
         // Butonlara tıklama olayları
         btnLogout.setOnClickListener {
             databaseHelper.setCurrentUser(null)
+            databaseHelper.setLoginStatus(false)
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, MainFragment())
                 .addToBackStack(null)

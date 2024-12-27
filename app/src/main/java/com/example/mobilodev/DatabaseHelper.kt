@@ -118,27 +118,34 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
     }
 
     // Kullanıcının Tüm Bilgilerini Getirme
-    fun getUserDetails(userID: Int): User? {
+    fun getUserDetails(): User? {
+        val userID = getCurrentUserID() ?: return null // Correct null check
+
         val db = this.readableDatabase
         val query = "SELECT * FROM $TABLE_USERS WHERE $COLUMN_USER_ID = ?"
         val cursor: Cursor = db.rawQuery(query, arrayOf(userID.toString()))
-        val user = if (cursor.moveToFirst()) {
-            User(
-                cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_USER_ID)),
-                cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USERNAME)),
-                cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PASSWORD)),
-                cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME)),
-                cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PROFILE_PHOTO))
-            )
-        } else null
 
-        cursor.close()
-        db.close()
-        return user
+        return try {
+            if (cursor.moveToFirst()) {
+                User(
+                    cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_USER_ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USERNAME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PASSWORD)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PROFILE_PHOTO))
+                )
+            } else {
+                null
+            }
+        } finally {
+            cursor?.close()
+            db.close()
+        }
     }
 
     // Kullanıcı Bilgilerini Güncelleme
-    fun updateUserDetails(userID: Int, username: String?, password: String?, name: String?, profilePhoto: String?): Boolean {
+    fun updateUserDetails( username: String?, password: String?, name: String?, profilePhoto: String?): Boolean {
+        val userID = getCurrentUserID() ?: return false // Kullanıcı ID'sini al ve null kontrolü yap
         val db = this.writableDatabase
         val contentValues = ContentValues().apply {
             username?.let { put(COLUMN_USERNAME, it) }
@@ -234,7 +241,8 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
     }
 
     // Kullanıcıya Ait Yerleri Getirme
-    fun getUserTrips(userID: Int): List<Place> {
+    fun getUserTrips(): List<Place> {
+        val userID = getCurrentUserID() ?: return emptyList() // Kullanıcı ID'sini al ve null kontrolü yap
         val db = this.readableDatabase
         val query = "SELECT * FROM $TABLE_PLACES WHERE $COLUMN_PLACE_USER_ID = ?"
         val cursor: Cursor = db.rawQuery(query, arrayOf(userID.toString()))

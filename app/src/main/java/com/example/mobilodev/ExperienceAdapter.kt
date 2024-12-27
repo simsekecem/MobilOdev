@@ -1,6 +1,6 @@
 package com.example.mobilodev
 
-import android.annotation.SuppressLint
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,11 +8,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.Place
+import java.io.File
 
-
-
-
-// RecyclerView için Adapter sınıfı
 class ExperienceAdapter(private var experienceList: List<Place>) :
     RecyclerView.Adapter<ExperienceAdapter.ExperienceViewHolder>() {
 
@@ -30,19 +27,27 @@ class ExperienceAdapter(private var experienceList: List<Place>) :
         return ExperienceViewHolder(view)
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ExperienceViewHolder, position: Int) {
         val experience = experienceList[position]
         holder.titleTextView.text = experience.name
-        holder.ratingTextView.text = "Puan: ${experience.rating}" // Rating dinamik olarak geldi
+        holder.ratingTextView.text = "Puan: ${experience.rating}"
         holder.commentTextView.text = experience.comment
-        holder.imgExperience.setImageURI(android.net.Uri.parse(experience.photoPath))
 
+        val photoPath = experience.photoPath
+        if (!photoPath.isNullOrEmpty()) {
+            val file = File(photoPath)
+            if (file.exists()) {
+                val bitmap = BitmapFactory.decodeFile(photoPath)
+                holder.imgExperience.setImageBitmap(bitmap)
+            } else {
+                holder.imgExperience.setImageResource(R.drawable.placeholder_image) // Yedek resim
+            }
+        } else {
+            holder.imgExperience.setImageResource(R.drawable.placeholder_image) // Yedek resim
+        }
     }
 
     override fun getItemCount(): Int {
         return experienceList.size
     }
-
-
 }

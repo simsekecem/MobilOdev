@@ -1,12 +1,16 @@
 package com.example.mobilodev
 
 import android.Manifest
+import android.content.ContentResolver
+import android.content.ContentValues
 import android.content.Intent
-import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,10 +20,12 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.myapplication.DatabaseHelper
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 
 class ProfileFragment : Fragment() {
 
@@ -29,6 +35,7 @@ class ProfileFragment : Fragment() {
     private lateinit var profileImageView: ImageView
     private lateinit var updateButton: Button
     private lateinit var imagePickerLauncher: ActivityResultLauncher<Intent>
+    private lateinit var permissionLauncher: ActivityResultLauncher<String>
     private var selectedProfileImageUri: Uri? = null
     private lateinit var dbHelper: DatabaseHelper
 
@@ -42,23 +49,20 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // View'ları bağlama
         nameEditText = view.findViewById(R.id.nameEditText)
         usernameEditText = view.findViewById(R.id.usernameEditText)
         passwordEditText = view.findViewById(R.id.passwordEditText)
         profileImageView = view.findViewById(R.id.profileImageView)
         updateButton = view.findViewById(R.id.updateButton)
 
-        // DatabaseHelper başlatma
         dbHelper = DatabaseHelper(requireContext())
 
         setupImagePicker()
+        setupPermissionLauncher()
         loadUserProfile()
 
-        // Profil fotoğrafını seçme
-        profileImageView.setOnClickListener { checkAndOpenImagePicker() }
+        profileImageView.setOnClickListener { checkAndRequestPermission() }
 
-        // Güncelleme butonuna tıklama
         updateButton.setOnClickListener {
             handleUpdateProfile()
             requireActivity().supportFragmentManager.popBackStack()
@@ -66,34 +70,46 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setupImagePicker() {
-        imagePickerLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == android.app.Activity.RESULT_OK) {
-                    val imageUri = result.data?.data
-                    if (imageUri != null) {
-                        profileImageView.setImageURI(imageUri)
-                        selectedProfileImageUri = imageUri // Fotoğraf URI'sini saklıyoruz
+        imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == android.app.Activity.RESULT_OK) {
+                val imageUri = result.data?.data
+                if (imageUri != null) {
+                    val drawablePath = saveImageToDrawable(imageUri)
+                    if (drawablePath != null) {
+                        profileImageView.setImageURI(Uri.parse(drawablePath))
+                        selectedProfileImageUri = Uri.parse(drawablePath)
+                    } else {
+                        Toast.makeText(requireContext(), "Resim kaydedilemedi!", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
+        }
     }
 
-    private fun checkAndOpenImagePicker() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                // İzin yok, kullanıcıdan isteme
-                requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_CODE_STORAGE_PERMISSION)
+    private fun setupPermissionLauncher() {
+        permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                openImagePicker()
             } else {
-                // İzin var, dosya seçici aç
+                Toast.makeText(requireContext(), "İzin verilmedi, fotoğraf seçemezsiniz!", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun checkAndRequestPermission() {
+        val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            Manifest.permission.READ_MEDIA_IMAGES
+        } else {
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        }
+
+        when {
+            ContextCompat.checkSelfPermission(requireContext(), permission) == android.content.pm.PackageManager.PERMISSION_GRANTED -> {
                 openImagePicker()
             }
-        } else {
-            // Eski Android sürümleri için direkt dosya seçici aç
-            openImagePicker()
+            else -> {
+                permissionLauncher.launch(permission)
+            }
         }
     }
 
@@ -109,13 +125,36 @@ class ProfileFragment : Fragment() {
             usernameEditText.setText(user.username)
             passwordEditText.setText(user.password)
 
-            // Profil fotoğrafı varsa göster
+            // Veritabanından gelen profil fotoğrafı yolunu kullan
             user.profilePhoto?.let {
-                val imageUri = Uri.parse(it)
-                profileImageView.setImageURI(imageUri)
+                val drawablePath = it
+                val file = File(drawablePath)
+                if (file.exists()) {
+                    profileImageView.setImageURI(Uri.fromFile(file))
+                } else {
+                    Toast.makeText(requireContext(), "Profil resmi bulunamadı.", Toast.LENGTH_SHORT).show()
+                }
             }
         } else {
             Toast.makeText(requireContext(), "Kullanıcı bilgileri yüklenemedi", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun saveImageToDrawable(imageUri: Uri): String? {
+        return try {
+            val inputStream: InputStream? = requireContext().contentResolver.openInputStream(imageUri)
+            val bitmap = BitmapFactory.decodeStream(inputStream)
+            val drawableFile = File(requireContext().filesDir, "drawable")
+            if (!drawableFile.exists()) drawableFile.mkdir()
+            val file = File(drawableFile, "profile_image.png")
+            val outputStream = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+            outputStream.flush()
+            outputStream.close()
+            file.absolutePath
+        } catch (e: Exception) {
+            Log.e("ProfileFragment", "saveImageToDrawable: ${e.message}")
+            null
         }
     }
 
@@ -144,25 +183,5 @@ class ProfileFragment : Fragment() {
         } else {
             Toast.makeText(requireContext(), "Lütfen tüm alanları doldurun", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_CODE_STORAGE_PERMISSION) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Kullanıcı izni verdi, dosya seçici aç
-                openImagePicker()
-            } else {
-                Toast.makeText(requireContext(), "İzin reddedildi", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    companion object {
-        private const val REQUEST_CODE_STORAGE_PERMISSION = 1001
     }
 }

@@ -14,9 +14,8 @@ import com.example.myapplication.Place
 class MainFragment : Fragment() {
 
     private lateinit var databaseHelper: DatabaseHelper
-    private lateinit var experienceAdapter1: ExperienceAdapter
-    private lateinit var experienceAdapter2: ExperienceAdapter
-    private lateinit var experienceAdapter3: ExperienceAdapter
+    private lateinit var experienceAdapter5: ExperienceAdapter
+    private lateinit var experienceAdapter6: ExperienceAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,31 +67,24 @@ class MainFragment : Fragment() {
         databaseHelper = DatabaseHelper(requireContext())
 
         // RecyclerView'ları ayarla
-        setupRecyclerView1(view)
-        setupRecyclerView2(view)
-        setupRecyclerView3(view)
+        setupRecyclerView5(view)
+        setupRecyclerView6(view)
     }
 
-    private fun setupRecyclerView1(view: View) {
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView1)
+    private fun setupRecyclerView5(view: View) {
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView5)
         recyclerView?.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        experienceAdapter1 = ExperienceAdapter(getAllTrips())
-        recyclerView?.adapter = experienceAdapter1
+        experienceAdapter5 = ExperienceAdapter(getAllTrips())
+        recyclerView?.adapter = experienceAdapter5
     }
 
-    private fun setupRecyclerView2(view: View) {
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView2)
+    private fun setupRecyclerView6(view: View) {
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView6)
         recyclerView?.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        experienceAdapter2 = ExperienceAdapter(getTopRatedTrips())
-        recyclerView?.adapter = experienceAdapter2
+        experienceAdapter6 = ExperienceAdapter(getTopRatedTrips())
+        recyclerView?.adapter = experienceAdapter6
     }
 
-    private fun setupRecyclerView3(view: View) {
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView3)
-        recyclerView?.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        experienceAdapter3 = ExperienceAdapter(getUserTrips())
-        recyclerView?.adapter = experienceAdapter3
-    }
 
     private fun getAllTrips(): List<Place> {
         return databaseHelper.getAllTrips()
@@ -102,7 +94,4 @@ class MainFragment : Fragment() {
         return databaseHelper.getTopRatedTrips()
     }
 
-    private fun getUserTrips(): List<Place> {
-        return databaseHelper.getUserTrips()
-    }
 }

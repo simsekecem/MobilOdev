@@ -321,4 +321,21 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         return places
     }
 
+    fun getUsernameByUserId(userId: Int): String? {
+        val db = this.readableDatabase
+        val query = "SELECT $COLUMN_USERNAME FROM $TABLE_USERS WHERE $COLUMN_USER_ID = ?"
+        val cursor = db.rawQuery(query, arrayOf(userId.toString()))
+
+        val username = if (cursor.moveToFirst()) {
+            cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USERNAME))
+        } else {
+            null
+        }
+
+        cursor.close()
+        db.close()
+        return username
+    }
+
+
 }

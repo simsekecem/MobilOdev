@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.Place
+import com.example.myapplication.DatabaseHelper
 import java.io.File
 
 class ExperienceAdapter(private var experienceList: List<Place>) :
@@ -19,6 +20,7 @@ class ExperienceAdapter(private var experienceList: List<Place>) :
         val titleTextView: TextView = itemView.findViewById(R.id.tvTitle)
         val ratingTextView: TextView = itemView.findViewById(R.id.tvRating)
         val commentTextView: TextView = itemView.findViewById(R.id.tvComment)
+        val usernameTextView: TextView = itemView.findViewById(R.id.etUsername)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExperienceViewHolder {
@@ -33,6 +35,12 @@ class ExperienceAdapter(private var experienceList: List<Place>) :
         holder.ratingTextView.text = "Puan: ${experience.rating}"
         holder.commentTextView.text = experience.comment
 
+        // Kullanıcı adını almak için DatabaseHelper kullanımı
+        val dbHelper = DatabaseHelper(holder.itemView.context)
+        val username = dbHelper.getUsernameByUserId(experience.userId)
+        holder.usernameTextView.text = username ?: "Bilinmiyor"
+
+        // Fotoğrafı yükleme
         val photoPath = experience.photoPath
         if (!photoPath.isNullOrEmpty()) {
             val file = File(photoPath)

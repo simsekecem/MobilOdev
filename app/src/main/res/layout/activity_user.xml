@@ -137,12 +137,6 @@
                 android:textSize="20sp" />
 
             <!-- Deneyim Ekleme Butonu -->
-            <Button
-                android:id="@+id/btnSearch"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:text="+"
-                android:layout_gravity="end" />
         </LinearLayout>
 
 
